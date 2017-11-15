@@ -46,7 +46,7 @@ zcash faucet UI available at http://[docker host]:[docker port]/, e.g. http://19
   
 # Start your own testnet node
 ## Directory-structure
-* zcash-docker/node/
+* zcash-docker/your_node/
   * docker-compose.yml
   * zcashd/
     * zcashd.conf
@@ -68,6 +68,7 @@ rpcport=18232
 OR
 ```
 # autogenerates default zcash.conf file
+cd zcash-docker/
 docker build -t recursethis/zcashd:latest zcashd/
 ```
 
