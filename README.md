@@ -42,7 +42,7 @@ z gettransaction <transaction id>
 root@zcashd:~/.zcash# z z_gettotalbalance 0
 root@zcashd:~/.zcash# z z_gettotalbalance 1
 ```
-zcash faucet UI available at http://[docker host]:[docker port]/
+zcash faucet UI available at http://[docker host]:[docker port]/, e.g. http://192.168.99.100:81/
   
 # Start your own testnet node
 ## Directory-structure
