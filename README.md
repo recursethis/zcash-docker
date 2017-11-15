@@ -1,11 +1,11 @@
 # zcash-docker
 Dockerfiles and docker-compose files for zcash on testnet and zcash faucet running locally
 
-# Quick start
+# Quickstart
 
 ```
 # deploy zcashd & zcash faucet stack
-cd demo/nodeA/
+cd zcash-docker/demo/nodeA/
 docker-compose pull
 docker-compose up -d
 
@@ -50,7 +50,8 @@ zcash faucet UI available at http://[docker host]:[docker port]/, e.g. http://19
   * docker-compose.yml
   * zcashd/
     * zcashd.conf
-    
+   
+## Steps
 1. Create zcash.conf file
 ```
 rpcuser=<username>
@@ -72,7 +73,11 @@ cd zcash-docker/
 docker build -t recursethis/zcashd:latest zcashd/
 ```
 
-2. update docker-compose file
+2. update docker-compose file with following configurations: 
+> **docker IP, docker port, docker network subnet, docker network gateway**
+>
+> allows for multiple zcashd nodes to run on the same docker-machine
+
 ```
 version: '2.1'
 
@@ -154,4 +159,4 @@ volumes:
 docker-compose pull
 docker-compose up -d
 ```
-Note: fail2ban is optional. Can deploy without it, by running 1docker-compose up -d zcashd`, then `docker-compose up -d nginx`
+> NOTE: fail2ban is optional. Can deploy without it, by running `docker-compose up -d zcashd`, then `docker-compose up -d nginx`
