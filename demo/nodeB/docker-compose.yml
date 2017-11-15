@@ -1,0 +1,65 @@
+version: '2.1'
+
+services:
+    zcashd:
+        image: recursethis/zcashd:3.0
+        tty: true
+        expose:
+            - 18232
+            - 8232
+        networks:
+            - net
+        volumes:
+            - ${PWD}/zcashd/:/config/
+            - zcashd:/root/.zcash/:rw
+
+
+    nginx:
+        image: recursethis/zfaucet-nginx:2.0
+        ports:
+            - 82:80
+        networks:
+            - net
+        depends_on:
+            - faucet
+        volumes:
+            - faucet_static:/home/zcash/faucet/faucet/static/:ro
+            - nginx_log:/var/log/nginx/:rw
+
+    faucet:
+        image: recursethis/zfaucet:3.0
+        environment:
+            - DOCKER_IP=192.168.99.100
+        healthcheck:
+            test: python manage.py sweepfunds && python manage.py healthcheck
+            interval: 5m
+        expose:
+            - 8000
+        depends_on:
+            - db
+        networks:
+            - net
+        volumes:
+            - ${PWD}/zcashd/:/root/.zcash/:ro
+            - faucet_static:/home/zcash/faucet/faucet/static/:rw
+
+    db:
+        image: postgres:10-alpine
+        environment:
+            - POSTGRES_PASSWORD=mysecretpassword
+            - POSTGRES_USER=django
+            - POSTGRES_DB=django
+        networks:
+            - net
+
+networks:
+    net:
+        ipam:
+            config:
+                - subnet: 172.26.0.0/16
+                  gateway: 172.26.0.1
+
+volumes:
+    zcashd:
+    faucet_static:
+    nginx_log:
