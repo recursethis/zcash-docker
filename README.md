@@ -160,3 +160,12 @@ docker-compose pull
 docker-compose up -d
 ```
 > NOTE: fail2ban is optional. Can deploy without it, by running `docker-compose up -d zcashd`, then `docker-compose up -d nginx`
+
+# Logging
+To view zcashd logging, run `docker-compose logs -f zcashd`
+To view the debug log,
+```
+docker exec -it <your node directory>_zcashd_1 /bin/bash
+root@zcashd:~/.zcash# tail -f testnet3/*log
+```
+To view zcash faucet logging, run `docker-compose logs -f faucet nginx fail2ban`
